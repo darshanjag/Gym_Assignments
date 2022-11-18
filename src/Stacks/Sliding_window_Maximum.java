@@ -4,36 +4,50 @@ import java.util.*;
 
 public class Sliding_window_Maximum {
 
-        static void SlidingWindowMaximum(int n, int k, int[] nums){
-            if(n==1){
-              System.out.println(1);
-              return;
+        static void SlidingWindowMaximum(int n, int k, int[] nums) {
+            Stack<Integer> st = new Stack<>();
+            if (k == 0) {
+                return;
             }
-            if(k==1){
-                for(int y = 0; y < nums.length; y++){
-                    System.out.print(nums[y]+" ");
+            if (k == 1 || n == 1) {
+                for (int y = 0; y < nums.length; y++) {
+                    System.out.print(nums[y] + " ");
                 }
                 return;
             }
-            int Max = Integer.MIN_VALUE;
 
-            int [] ans = new int[n-(k-1)];
-            int i=0,j=0,z=0;
-            while(i<n-1){
-                i++;
-                Max=Math.max(Max,nums[i]);
 
-                if(i-j+1==k){
-                    System.out.println("hit");
-                    ans[z]=Max;
-                    z++;
-                    j++;
+            int i = 0, j = 0, z = 0;
+            st.add(Integer.MIN_VALUE);
+            while (i < n ) {
+                while (!st.isEmpty() && st.peek() < nums[i]) {
+                    st.pop();
                 }
-            }
-//
-            System.out.println(Arrays.toString(ans));
-        }
+                if(st.isEmpty()){
+                    st.add(nums[i]);
+                }
+                if(st.peek()<nums[i]){
+                    st.add(nums[i]);
+                }
+                System.out.println(st);
+                if(i-j+1==k){
+                   System.out.print(st.peek()+" ");
 
+                    if(st.peek()==nums[j]){
+                        st.pop();
+                        i=j+1;
+                    }
+                    j++;
+
+                }
+
+
+
+                i++;
+
+            }
+
+        }
     public static void main(String[] args) throws Throwable {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
